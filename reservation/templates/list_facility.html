@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Facilities</h1>
+<div class="facility-list">
+    {% for facility in facilities %}
+    <div class="facility">
+        <h2>{{ facility.name }}</h2>
+        <img src="{{ facility.image.url }}" alt="{{ facility.name }}" style="max-width: 200px;">
+        <p>{{ facility.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

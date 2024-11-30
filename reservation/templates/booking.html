@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Book a Room</h1>
+<form method="post">
+    {% csrf_token %}
+    
+    <label for="guest">Guest Name:</label>
+    <input type="text" name="guest" id="guest" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required>
+    
+    <label for="contact_number">Contact Number:</label>
+    <input type="text" name="contact_number" id="contact_number" required>
+    
+    <label for="room">Select Room:</label>
+    <select name="room" id="room">
+        {% for room in rooms %}
+        <option value="{{ room.id }}" style="color: {% if room.is_special %}red{% else %}black{% endif %};">
+            {{ room.name }}
+        </option>
+        {% endfor %}
+    </select>
+    
+    <label for="date_of_booking">Date of Booking:</label>
+    <input type="date" name="date_of_booking" id="date_of_booking" required>
+    
+    <p>Payment Method: <strong>Face-to-Face</strong></p>
+    
+    <button type="submit">Confirm Booking</button>
+</form>
+{% endblock %}

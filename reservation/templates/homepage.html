@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to Our Resort</h1>
+<p>Enjoy a comfortable and relaxing stay at our beautiful resort.</p>
+
+<h2>Available Rooms</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Room Name</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.name }}</td>
+            <td>{{ room.price }}</td>
+            <td><a href="{% url 'view_room' room.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Facilities</h2>
+<div>
+    {% for facility in facilities %}
+    <div>
+        <h3>{{ facility.name }}</h3>
+        <img src="{{ facility.image.url }}" alt="{{ facility.name }}" style="max-width: 200px;">
+        <p>{{ facility.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
