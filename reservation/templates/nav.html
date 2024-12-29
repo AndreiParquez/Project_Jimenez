@@ -1,9 +1,31 @@
-<nav>
-    <ul>
-        <li><a href="{% url 'home' %}">home</a></li>  
-        <li><a href="{% url 'room_list' %}">Rooms</a></li>
-        <li><a href="{% url 'list_facility' %}">Facilities</a></li>
-        <li><a href="{% url 'book_room' %}">Book Room</a></li>
-    </ul>
+{% load static %}
+<nav class="p-4">
+    <div class="container text-zinc-900  mx-auto flex justify-between items-center">
+        <div class="text-sm font-bold flex items-center space-x-2">
+            <img src="{% static 'images/logo.jpg' %}" alt="logo" class="h-8 border-2 border-zinc-300 rounded-full">
+            <a href="{% url 'home' %}">CRJ</a>
+        </div>
+        <ul class="flex space-x-4 text-sm text-zinc-900  font-semibold">
+            <li>
+                <a href="{% url 'home' %}" class="  hover:text-cyan-500 flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'room_list' %}" class="hover:text-cyan-500  flex items-center">
+                    <i class="fas fa-bed mr-2"></i> Rooms
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_facility' %}" class=" hover:text-cyan-500  flex items-center">
+                    <i class="fas fa-dumbbell mr-2"></i> Facilities
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'book_room' %}" class=" hover:text-cyan-500  flex items-center">
+                    <i class="fas fa-phone mr-2"></i> Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
-

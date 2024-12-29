@@ -4,16 +4,13 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from .models import Guest, Room, Reservation, Facility
 from django.shortcuts import render
+from datetime import datetime
+from django.http import JsonResponse
 
 
 
 
-def book_room(request):
-    rooms = Room.objects.filter(is_available=True) 
-    if request.method == 'POST':
-       
-        pass
-    return render(request, 'booking.html', {'rooms': rooms})
+
 
 def homepage(request):
     rooms = Room.objects.filter(is_available=True)
@@ -46,9 +43,36 @@ class GuestCreateView(CreateView):
 
 class ReservationCreateView(CreateView):
     model = Reservation
-    fields = ['guest', 'room', 'date_of_booking', 'status']
+    fields = ['guest', 'room', 'checkIn','checkOut', 'status']
     template_name = 'booking.html'
     success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rooms'] = Room.objects.filter(is_available=True)
+        context['guests'] = Guest.objects.all()
+        context['checkIn'] = Guest.objects.all()
+        context['checkOut'] = Guest.objects.all()
+        context['total_cost'] = Guest.objects.all()
+        context['status'] = ['Pending','Complete']
+        return context
+
+    def form_valid(self, form):
+        check_in = form.cleaned_data['checkIn']
+        check_out = form.cleaned_data['checkOut']
+        room = form.cleaned_data['room']
+        total_days = (check_out - check_in).days
+        total_cost = total_days * room.price
+        form.instance.total_cost = total_cost
+        response = super().form_valid(form)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return response
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors})
+        return super().form_invalid(form)
 
 
 

@@ -1,37 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Welcome to Our Resort</h1>
-<p>Enjoy a comfortable and relaxing stay at our beautiful resort.</p>
 
-<h2>Available Rooms</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Room Name</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for room in rooms %}
-        <tr>
-            <td>{{ room.name }}</td>
-            <td>{{ room.price }}</td>
-            <td><a href="{% url 'view_room' room.id %}">View</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h2>Facilities</h2>
-<div>
-    {% for facility in facilities %}
-    <div>
-        <h3>{{ facility.name }}</h3>
-        <img src="{{ facility.image.url }}" alt="{{ facility.name }}" style="max-width: 200px;">
-        <p>{{ facility.description }}</p>
+<!-- Hero Section -->
+{% load static %}
+<div class="relative bg-cover bg-center h-96" style="background-image: url({% static 'images/rgp6.jpg' %});">
+    <div class="absolute inset-0 bg-gradient-to-t from-zinc-100 to-transparent"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+        <h1 class="text-4xl text-zinc-900 font-bold mb-4">Welcome to <span class="text-cyan-500 drop-shadow-md">RGP Resort</span> </h1>
+        <p class="font-semibold mb-6 drop-shadow-md">Book your stay with us and enjoy a comfortable experience.</p>
+        <a href="{% url 'book_room' %}" class="shadow bg-cyan-500 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded-full">Book Now</a>
     </div>
+</div>
+
+<h2 class="font-bold mt-8 mx-auto">What to do</h2>
+
+
+
+<h2 class="font-bold mt-8">Available Rooms</h2>
+{% if rooms %}
+<div class="grid grid-cols-3 gap-4">
+    {% for room in rooms %}
+        <div class="p-4  rounded-xl shadow">
+            {% if room.image %}
+                <img src="{{ room.image.url }}" alt="{{ room.name }}" class="mt-2 w-full h-36 object-cover rounded-lg">
+            {% endif %}
+            <h2 class="text-sm font-bold">{{ room.name }}</h2>
+            <div class="flex items-center">
+                <p class="text-gray-700 text-sm font-bold">₱{{ room.price }}</p><span class="text-sm font-bold text-yellow-500 ">/night</span>
+            </div>
+        </div>
     {% endfor %}
 </div>
+{% else %}
+<p>No rooms available.</p>
+{% endif %}
+
 {% endblock %}

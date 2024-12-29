@@ -21,8 +21,10 @@ class Room(models.Model):
 class Reservation(models.Model):
     guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    date_of_booking = models.DateField()
+    checkIn = models.DateField()
+    checkOut = models.DateField()
     status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Complete', 'Complete')])
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Add this line
 
     def __str__(self):
         return f"{self.guest.name} - {self.room.name}"

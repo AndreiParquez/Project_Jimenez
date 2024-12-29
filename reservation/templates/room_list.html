@@ -2,22 +2,24 @@
 
 {% block content %}
 <h1>Available Rooms</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Room Name</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for room in rooms %}
-        <tr>
-            <td>{{ room.name }}</td>
-            <td>{{ room.price }}</td>
-            <td><a href="{% url 'view_room' room.id %}">View</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    
+{% if rooms %}
+<div class="grid grid-cols-3 gap-4">
+    {% for room in rooms %}
+        <a href="{% url 'view_room' room.pk %}" class="block p-4 border rounded shadow hover:bg-gray-100">
+            <h2 class="text-lg font-bold">{{ room.name }}</h2>
+            <p class="text-gray-700">Price: ${{ room.price }}</p>
+            {% if room.image %}
+                <img src="{{ room.image.url }}" alt="{{ room.name }}" class="mt-2 w-full h-48 object-cover">
+            {% endif %}
+        </a>
+    {% endfor %}
+</div>
+
+<!-- Pagination (Optional) -->
+
+{% else %}
+<p>No rooms available.</p>
+{% endif %}
+
 {% endblock %}

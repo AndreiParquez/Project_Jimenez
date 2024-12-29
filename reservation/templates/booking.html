@@ -1,33 +1,117 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Book a Room</h1>
-<form method="post">
+<h1 class="font-bold text-center mb-12 py-8">Reservation</h1>
+<form id="booking-form" action="{% url 'book_room' %}" method="post" class="text-sm grid grid-cols-1 md:grid-cols-2 gap-4 px-8">
     {% csrf_token %}
     
-    <label for="guest">Guest Name:</label>
-    <input type="text" name="guest" id="guest" required>
+    {% if form.errors %}
+        <div class="form-errors col-span-2">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
+    <div class="col-span-1">
+        <label for="guest">Guest Name:</label>
+        <select name="guest" id="guest" required class="w-full">
+            {% for guest in guests %}
+            <option value="{{ guest.pk }}" {% if guest.pk == form.guest.value %} selected {% endif %}>
+                {{ guest.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
     
-    <label for="contact_number">Contact Number:</label>
-    <input type="text" name="contact_number" id="contact_number" required>
+    <div class="col-span-1">
+        <label for="contact_number">Contact Number:</label>
+        <input type="text" name="contact_number" id="contact_number" required class="w-full">
+    </div>
     
-    <label for="room">Select Room:</label>
-    <select name="room" id="room">
-        {% for room in rooms %}
-        <option value="{{ room.id }}" style="color: {% if room.is_special %}red{% else %}black{% endif %};">
-            {{ room.name }}
-        </option>
-        {% endfor %}
-    </select>
+    <div class="col-span-1">
+        <label for="room">Select Room:</label>
+        <select name="room" id="room" class="w-full" onchange="calculateTotalCost()">
+            {% for room in rooms %}
+            <option value="{{ room.pk }}" data-price="{{ room.price }}" {% if room.pk == form.room.value %} selected {% endif %}>
+                {{ room.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
     
-    <label for="date_of_booking">Date of Booking:</label>
-    <input type="date" name="date_of_booking" id="date_of_booking" required>
+    <div class="col-span-1">
+        <label for="checkIn">Check In Date:</label>
+        <input type="date" name="checkIn" id="checkIn" required class="w-full" onchange="calculateTotalCost()">
+    </div>
     
-    <p>Payment Method: <strong>Face-to-Face</strong></p>
+    <div class="col-span-1">
+        <label for="checkOut">Check Out Date:</label>
+        <input type="date" name="checkOut" id="checkOut" required class="w-full" onchange="calculateTotalCost()">
+    </div>
     
-    <button type="submit">Confirm Booking</button>
+    <input type="hidden" name="status" id="status" value="Pending">
+    <input type="hidden" name="total_cost" id="total_cost" value="{{ form.instance.total_cost }}">
+    
+    <div class="col-span-2 text-center">
+        <p>Payment Method: <strong>Face-to-Face</strong></p>
+        <input type="submit" value="Save" class="bg-cyan-500 hover:bg-cyan-700   text-white font-bold py-2 px-4 rounded">
+    </div>
 </form>
+
+<script>
+function calculateTotalCost() {
+    const roomSelect = document.getElementById('room');
+    const checkInDate = document.getElementById('checkIn').value;
+    const checkOutDate = document.getElementById('checkOut').value;
+    const totalCostInput = document.getElementById('total_cost');
+
+    if (roomSelect && checkInDate && checkOutDate) {
+        const selectedRoom = roomSelect.options[roomSelect.selectedIndex];
+        const roomPrice = parseFloat(selectedRoom.getAttribute('data-price'));
+        const checkIn = new Date(checkInDate);
+        const checkOut = new Date(checkOutDate);
+        const timeDifference = checkOut - checkIn;
+        const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+        if (daysDifference > 0) {
+            const totalCost = daysDifference * roomPrice;
+            totalCostInput.value = totalCost.toFixed(2);
+        } else {
+            totalCostInput.value = '0.00';
+        }
+    }
+}
+
+document.getElementById('booking-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = "{% url 'home' %}"; // Redirect to success page
+        } else {
+            // Handle form errors
+            console.log(data.errors);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
 {% endblock %}

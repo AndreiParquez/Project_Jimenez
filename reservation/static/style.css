@@ -1,13 +1,14 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #e3f2fd;
-    color: #0d47a1;
+    
+    background-color: #f0f0f0;
+    color: #202020;
+    font-family: "Poppins", serif;
 }
 
 nav ul {
     list-style: none;
     padding: 10px;
-    background-color: #1976d2;
+
     display: flex;
 }
 
@@ -16,12 +17,12 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    
     text-decoration: none;
 }
 
 h1 {
-    color: #0d47a1;
+    color: #121212;
 }
 
 table {

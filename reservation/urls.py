@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     RoomListView, RoomDetailView, GuestCreateView, FacilityListView,
     ReservationCreateView, RoomUpdateView, RoomDeleteView, 
-    FacilityUpdateView, FacilityDeleteView, homepage, book_room
+    FacilityUpdateView, FacilityDeleteView, homepage,
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,6 +21,6 @@ urlpatterns = [
     path('facilities/<int:pk>/update/', FacilityUpdateView.as_view(), name='update_facility'),
     path('facilities/<int:pk>/delete/', FacilityDeleteView.as_view(), name='delete_facility'),
     path('reservations/create/', ReservationCreateView.as_view(), name='book_room'),
-    path('book-room/', book_room, name='book_room'),
+   
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
