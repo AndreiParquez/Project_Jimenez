@@ -12,8 +12,8 @@ urlpatterns = [
     path('', homepage, name='home'),
     path('rooms/', RoomListView.as_view(), name='room_list'),
     path('rooms/<int:pk>/', RoomDetailView.as_view(), name='view_room'),
-    path('rooms/<int:pk>/update/', RoomUpdateView.as_view(), name='update_room'),
-    path('rooms/<int:pk>/delete/', RoomDeleteView.as_view(), name='delete_room'),
+    path('rooms/<int:pk>/update/', RoomUpdateView.as_view(), name='room_update'),
+    path('rooms/<int:pk>/delete/', RoomDeleteView.as_view(), name='room_delete'),
     
     
     path('guests/create/', GuestCreateView.as_view(), name='create_guest'),

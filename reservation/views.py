@@ -78,8 +78,8 @@ class ReservationCreateView(CreateView):
 
 class RoomUpdateView(UpdateView):
     model = Room
-    fields = ['name', 'is_available', 'price', 'description']
-    template_name = 'room_form.html'
+    fields = ['name', 'description', 'image', 'price', 'is_available']
+    template_name = 'update_room.html'
     success_url = reverse_lazy('room_list')
 
 class FacilityUpdateView(UpdateView):
@@ -92,7 +92,7 @@ class FacilityUpdateView(UpdateView):
 
 class RoomDeleteView(DeleteView):
     model = Room
-    template_name = 'confirm_delete.html'
+    template_name = 'room_delete.html'
     success_url = reverse_lazy('room_list')
 
 class FacilityDeleteView(DeleteView):

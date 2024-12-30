@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="font-bold text-center mb-12 py-8">Update Room</h1>
+<form action="" method="post" enctype="multipart/form-data" class="text-sm grid grid-cols-1 md:grid-cols-2 gap-4 px-8">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="col-span-2 text-center">
+        <input type="submit" value="Save" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded">
+    </div>
+</form>
+{% endblock %}

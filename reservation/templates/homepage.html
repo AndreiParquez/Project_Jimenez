@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<!-- Hero Section -->
+
 {% load static %}
 <div class="relative bg-cover bg-center h-96" style="background-image: url({% static 'images/rgp6.jpg' %});">
     <div class="absolute inset-0 bg-gradient-to-t from-zinc-100 to-transparent"></div>
@@ -13,23 +13,41 @@
     </div>
 </div>
 
-<h2 class="font-bold mt-8 mx-auto">What to do</h2>
+<h2 class="font-bold text-lg mt-8 text-center mb-4">What to do in <span class="text-cyan-500"> RGP</span></h2>
+<div class="flex">
+    <div class="p-4 w-1/2">
+        <h3 class=" font-bold">Relax <span class="text-cyan-500"> and</span> Unwind</h3>
+        <p class="text-sm">Enjoy the serene environment and relax in our comfortable rooms.</p>
+    </div>
+    <div class="p-4 w-1/2">
+        <img src="{% static 'images/rgp6.jpg' %}" alt="Relax and Unwind" class="w-full h-48 shadow object-cover rounded-lg">
+    </div>
+</div>
+<div class="flex">  
+    <div class="p-4 w-1/2">
+        <img src="{% static 'images/rgp6.jpg' %}" alt="Relax and Unwind" class="w-full h-48 object-cover shadow rounded-lg">
+    </div>
+    <div class="p-4 w-1/2">
+        <h3 class=" font-bold">Relax <span class="text-cyan-500"> and</span> Unwind</h3>
+        <p class="text-sm">Enjoy the serene environment and relax in our comfortable rooms.</p>
+    </div>
+</div>
 
 
 
 <h2 class="font-bold mt-8">Available Rooms</h2>
 {% if rooms %}
 <div class="grid grid-cols-3 gap-4">
-    {% for room in rooms %}
-        <div class="p-4  rounded-xl shadow">
+    {% for room in rooms|slice:":3" %}
+        <a href="{% url 'view_room' room.pk %}" class="p-4  rounded-xl shadow">
             {% if room.image %}
                 <img src="{{ room.image.url }}" alt="{{ room.name }}" class="mt-2 w-full h-36 object-cover rounded-lg">
             {% endif %}
             <h2 class="text-sm font-bold">{{ room.name }}</h2>
             <div class="flex items-center">
-                <p class="text-gray-700 text-sm font-bold">₱{{ room.price }}</p><span class="text-sm font-bold text-yellow-500 ">/night</span>
+                <p class="text-gray-700 text-sm font-bold">₱{{ room.price }}</p><span class="text-sm font-bold text-cyan-500 ">/night</span>
             </div>
-        </div>
+        </a>
     {% endfor %}
 </div>
 {% else %}
