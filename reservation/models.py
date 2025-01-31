@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Guest(models.Model):
     name = models.CharField(max_length=100)
@@ -26,18 +27,18 @@ class RoomImage(models.Model):
         return f"Image for {self.room.name}"
 
 class Reservation(models.Model):
-    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    guest = models.CharField(max_length=100)  # Changed to CharField for direct text input
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     checkIn = models.DateField()
     checkOut = models.DateField()
     status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Complete', 'Complete')])
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Add this line
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"{self.guest.name} - {self.room.name}"
+        return f"{self.guest}"
 
 class Payment(models.Model):
-    reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE)
+    reservations = models.OneToOneField(Reservation, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_date = models.DateField()
 

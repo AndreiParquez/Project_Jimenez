@@ -1,16 +1,32 @@
-
-
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Guest, Room, Reservation, Facility
-from django.shortcuts import render
 from datetime import datetime
 from django.http import JsonResponse
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 
 
+@login_required
+def user_reservations(request):
+    try:
+        reservations = Reservation.objects.filter(guest=request.user.username)
+    except Exception as e:
+        messages.error(request, f"An error occurred: {e}")
+        reservations = []
+    return render(request, 'user_reservations.html', {'reservations': reservations})
 
 
+class CustomLoginView(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'registration/login.html'
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 def homepage(request):
     rooms = Room.objects.filter(is_available=True)

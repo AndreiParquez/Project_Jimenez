@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-<h2 class="font-bold mt-8">Available Rooms</h2>
-{% if rooms %}
-<div class="grid grid-cols-3 gap-4">
-    {% for room in rooms %}
-        <a href="{% url 'view_room' room.pk %}" class="p-4  rounded-xl shadow">
-            {% if room.image %}
-                <img src="{{ room.image.url }}" alt="{{ room.name }}" class="mt-2 w-full h-36 object-cover rounded-lg">
-            {% endif %}
-            <h2 class="text-sm font-bold">{{ room.name }}</h2>
-            <div class="flex items-center">
-                <p class="text-gray-700 text-sm font-bold">₱{{ room.price }}</p><span class="text-sm font-bold text-cyan-500 ">/night</span>
-            </div>
-        </a>
-    {% endfor %}
-</div>
-{% else %}
-<p>No rooms available.</p>
-{% endif %}
+<div class="p-4">
+    <h2 class="font-bold text-lg mb-6 text-center">Available Rooms</h2>
+    {% if rooms %}
+        <div class="space-y-4">
+            {% for room in rooms %}
+                <div class="flex items-center p-4 bg-white rounded-md shadow-md">
+                    {% if room.image %}
+                        <img src="{{ room.image.url }}" alt="{{ room.name }}" class="w-48 h-36 object-cover rounded-sm shadow-md">
+                    {% endif %}
+                    <div class="ml-4 flex-1">
+                        <h2 class=" font-bold">{{ room.name }}</h2>
+                        <p class="text-zinc-700 text-sm">{{room.description}}</p>
+                        <div class="flex space-x-2 text-sm mt-2 font-bold text-cyan-500">
+                            <i class="fa-solid fa-utensils mr-2"></i>
+                            <i class="fa-solid fa-wine-glass mr-2"></i>
+                            <i class="fa-solid fa-wifi mr-2"></i>
+                            <i class="fa-solid fa-phone mr-2"></i>
+                            <i class="fa-solid fa-tv"></i>
 
+                        </div>
+                        <div class="flex space-x-2 text-sm mt-2">
+                            {% for image in room.additional_images.all %}
+                                <img src="{{ image.image.url }}" alt="{{ room.name }}" class="w-20 h-12 object-cover ring-zinc-200 ring-2 rounded-md">
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-gray-700  font-bold">₱{{ room.price }}<span class="text-sm font-bold text-cyan-500">/night</span></p>
+                        
+                        <a href="{% url 'view_room' room.pk %}" class="mt-4 inline-block text-sm bg-cyan-500 hover:bg-cyan-700 text-white  py-2 px-4 rounded">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No rooms available.</p>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,0 +1,53 @@
+{% load widget_tweaks %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <div class="flex-col items-center justify-center">
+            <img src="{% static 'images/rgp6.jpg' %}" alt="RGP Resort" class="w-24 h-24 mx-auto mb-4 rounded-full ring-4 ring-zinc-300 shadow-lg">
+            <h2 class="text-lg font-bold mb-6 text-zinc-900 text-center">Login to <span class="text-cyan-500">RGP</span> Resort</h2>
+        </div>
+        
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <div class="mb-4">
+                <label for="id_username" class="block text-gray-800 text-sm">Username</label>
+                {{ form.username|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.username.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="mb-6">
+                <label for="id_password" class="block text-gray-800 text-sm">Password</label>
+                {{ form.password|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.password.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="flex items-center justify-between ">
+                <a href="{% url 'signup' %}" class="text-cyan-500 text-xs">Create an account</a>
+                <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white tracking-widest py-1.5 px-4 text-xs font-bold rounded focus:outline-none focus:shadow-outline">
+                    LOGIN
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

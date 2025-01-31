@@ -13,21 +13,21 @@
     </div>
 </div>
 
-<div class="mt-8">
+<div class="mt-8 p-2">
     <div class="flex space-x-4 items-center">
         <h1 class="font-bold text-lg">{{ room.name }}</h1>
         <div class="text-sm flex space-x-2">
-            <p>Price: ₱{{ room.price }}</p>
-            <p class="bg-lime-300 px-2 rounded-full font-semibold">{{ room.is_available|yesno:"Available,Not Available" }}</p>
+            <p class="text-cyan-500 font-bold">Price: ₱{{ room.price }}</p>
+            <p class="bg-lime-300 px-2 text-zinc-600 text-xs rounded-full font-semibold">{{ room.is_available|yesno:"Available,Not Available" }}</p>
         </div>
     </div>
     
     <p class="indent-8 text-sm">{{ room.description }}</p>
     
     <div class="mt-8 w-full justify-center flex space-x-4">
-        <a href="{% url 'room_delete' room.pk %}" class="bg-red-500 hover:bg-yellow-700 text-white text-sm py-2 px-4 rounded">Delete Room</a>
-        <a href="{% url 'room_update' room.pk %}" class="bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-2 px-4 rounded">Update Room</a>
-        <a href="{% url 'book_room' %}" class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded">Book Room</a>
+        <!-- <a href="{% url 'room_delete' room.pk %}" class="bg-red-500 hover:bg-yellow-700 text-white text-sm py-2 px-4 rounded">Delete Room</a>
+        <a href="{% url 'room_update' room.pk %}" class="bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-2 px-4 rounded">Update Room</a> -->
+        <a href="{% url 'book_room' %}" class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm py-2 w-1/2 text-center px-4 rounded">Book Room</a>
 
     </div>
 </div>

@@ -21,24 +21,18 @@
     {% endif %}
     
     <div class="col-span-1">
-        <label for="guest">Guest Name:</label>
-        <select name="guest" id="guest" required class="w-full">
-            {% for guest in guests %}
-            <option value="{{ guest.pk }}" {% if guest.pk == form.guest.value %} selected {% endif %}>
-                {{ guest.name }}
-            </option>
-            {% endfor %}
-        </select>
+        <label for="guest" class="font-bold">Guest Name:</label>
+        <input type="text" name="guest" id="guest" required class="w-full rounded p-2">
     </div>
     
     <div class="col-span-1">
-        <label for="contact_number">Contact Number:</label>
-        <input type="text" name="contact_number" id="contact_number" required class="w-full">
+        <label for="contact_number" class="font-bold">Contact Number:</label>
+        <input type="text" name="contact_number" id="contact_number" required class="w-full rounded p-2">
     </div>
     
     <div class="col-span-1">
-        <label for="room">Select Room:</label>
-        <select name="room" id="room" class="w-full" onchange="calculateTotalCost()">
+        <label for="room" class="font-bold">Select Room:</label>
+        <select name="room" id="room" class="w-full rounded p-2" onchange="calculateTotalCost()">
             {% for room in rooms %}
             <option value="{{ room.pk }}" data-price="{{ room.price }}" {% if room.pk == form.room.value %} selected {% endif %}>
                 {{ room.name }}
@@ -48,21 +42,21 @@
     </div>
     
     <div class="col-span-1">
-        <label for="checkIn">Check In Date:</label>
-        <input type="date" name="checkIn" id="checkIn" required class="w-full" onchange="calculateTotalCost()">
+        <label for="checkIn" class="font-bold">Check In Date:</label>
+        <input type="date" name="checkIn" id="checkIn" required class="w-full rounded p-2" onchange="calculateTotalCost()">
     </div>
     
     <div class="col-span-1">
-        <label for="checkOut">Check Out Date:</label>
-        <input type="date" name="checkOut" id="checkOut" required class="w-full" onchange="calculateTotalCost()">
+        <label for="checkOut" class="font-bold">Check Out Date:</label>
+        <input type="date" name="checkOut" id="checkOut" required class="w-full rounded p-2" onchange="calculateTotalCost()">
     </div>
     
     <input type="hidden" name="status" id="status" value="Pending">
     <input type="hidden" name="total_cost" id="total_cost" value="{{ form.instance.total_cost }}">
     
-    <div class="col-span-2 text-center">
+    <div class="col-span-2 text-center mt-8">
         <p>Payment Method: <strong>Face-to-Face</strong></p>
-        <input type="submit" value="Save" class="bg-cyan-500 hover:bg-cyan-700   text-white font-bold py-2 px-4 rounded">
+        <input type="submit" value="Save" class="bg-cyan-500 hover:bg-cyan-700 w-1/2 mt-2   text-white font-bold py-2 px-4 rounded">
     </div>
 </form>
 
@@ -92,11 +86,11 @@ function calculateTotalCost() {
 
 document.getElementById('booking-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: form.method,
+    
+    const formData = new FormData(this);
+    
+    fetch("{% url 'book_room' %}", {
+        method: 'POST',
         body: formData,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',

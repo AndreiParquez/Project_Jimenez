@@ -1,29 +1,39 @@
 {% load static %}
 <nav class="p-4">
     <div class="container text-zinc-900  mx-auto flex justify-between items-center">
-        <div class="text-sm font-bold flex items-center space-x-2">
+        <div class="text-sm  flex items-center space-x-2">
             <img src="{% static 'images/logo.jpg' %}" alt="logo" class="h-8 border-2 border-zinc-300 rounded-full">
-            <a href="{% url 'home' %}">CRJ</a>
+            <a href="{% url 'home' %}" class="font-bold">CRJ</a>
+            {%if user.is_authenticated %}
+            <p class="text-sm italic pl-6">
+                Hello there 
+                <a href="{% url 'user_profile' %}" class="font-bold underline">{{ user.username }}</a> 
+                <i class="fa-regular fa-face-grin-wink"></i>
+            </p>
+            {%else%}
+            <p class="text-sm">Not Logged in</p>
+            {%endif%}
+            
         </div>
         <ul class="flex space-x-4 text-sm text-zinc-900  font-semibold">
             <li>
                 <a href="{% url 'home' %}" class="  hover:text-cyan-500 flex items-center">
-                    <i class="fas fa-home mr-2"></i> Home
+                    <i class="fas fa-home mr-2 text-cyan-500"></i> Home
                 </a>
             </li>
             <li>
                 <a href="{% url 'room_list' %}" class="hover:text-cyan-500  flex items-center">
-                    <i class="fas fa-bed mr-2"></i> Rooms
+                    <i class="fas fa-bed mr-2 text-cyan-500"></i> Rooms
                 </a>
             </li>
             <li>
                 <a href="{% url 'list_facility' %}" class=" hover:text-cyan-500  flex items-center">
-                    <i class="fas fa-dumbbell mr-2"></i> Facilities
+                    <i class="fas fa-dumbbell mr-2 text-cyan-500"></i> Facilities
                 </a>
             </li>
             <li>
-                <a href="{% url 'book_room' %}" class=" hover:text-cyan-500  flex items-center">
-                    <i class="fas fa-phone mr-2"></i> Contact Us
+                <a href="{% url 'user_reservations' %}" class=" hover:text-cyan-500  flex items-center">
+                    <i class="fa-solid fa-clipboard mr-2 text-cyan-500"></i> Reservations
                 </a>
             </li>
         </ul>

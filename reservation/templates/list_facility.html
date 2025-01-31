@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Facilities</h1>
-<div class="facility-list">
-    {% for facility in facilities %}
-    <div class="facility">
-        <h2>{{ facility.name }}</h2>
-        <img src="{{ facility.image.url }}" alt="{{ facility.name }}" style="max-width: 200px;">
-        <p>{{ facility.description }}</p>
+<div class="container mx-auto mt-8 p-4">
+    <h1 class="font-bold text-xl text-center mb-12">Facilities</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for facility in facilities %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h2 class=" font-bold mb-2">{{ facility.name }}</h2>
+                <p class="text-gray-700 text-xs">{{ facility.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

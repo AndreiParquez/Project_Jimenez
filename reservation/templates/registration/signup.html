@@ -1,0 +1,96 @@
+{% load widget_tweaks %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <div class="flex-col items-center justify-center">
+            <img src="{% static 'images/rgp6.jpg' %}" alt="RGP Resort" class="w-24 h-24 mx-auto mb-4 rounded-full ring-4 ring-zinc-300 shadow-lg">
+            <h2 class="text-lg font-bold mb-6 text-zinc-900 text-center">Sign up to <span class="text-cyan-500">RGP</span> Resort</h2>
+        </div>
+        
+        <form method="post" class="text-sm ">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-1">
+            
+            <div class="mb-4">
+                <label for="id_username" class="block text-gray-800 text-sm">Username</label>
+                {{ form.username|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.username.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-4">
+                <label for="id_email" class="block text-gray-800 text-sm">Email</label>
+                {{ form.email|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.email.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.email.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-4">
+                <label for="id_phone_number" class="block text-gray-800 text-sm">Phone Number</label>
+                {{ form.phone_number|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.phone_number.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.phone_number.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-4">
+                <label for="id_age" class="block text-gray-800 text-sm">Age</label>
+                {{ form.age|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.age.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.age.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-4">
+                <label for="id_password1" class="block text-gray-800 text-sm">Password</label>
+                {{ form.password1|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.password1.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.password1.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-6">
+                <label for="id_password2" class="block text-gray-800 text-sm">Confirm Password</label>
+                {{ form.password2|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                {% if form.password2.errors %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ form.password2.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+
+            
+    
+            <div class=" w-full">
+                <button type="submit" class="bg-cyan-500 w-full hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

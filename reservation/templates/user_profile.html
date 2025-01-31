@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container mx-auto mt-10">
+        <h1 class="font-bold text-center mb-2 py-8">User Profile</h1>
+        
+        {% if messages %}
+            <div class="mb-4 text-center">
+                {% for message in messages %}
+                    <div class="text-sm p-4 ">
+                        <p class="font-bold text-zinc-700"> {{ message }}</p>
+                        
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_form" value="profile_form">
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-800 text-sm">Username</label>
+                    {{ profile_form.username|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if profile_form.username.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ profile_form.username.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_email" class="block text-gray-800 text-sm">Email</label>
+                    {{ profile_form.email|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if profile_form.email.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ profile_form.email.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_age" class="block text-gray-800 text-sm">Age</label>
+                    {{ profile_form.age|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if profile_form.age.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ profile_form.age.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_phone_number" class="block text-gray-800 text-sm">Phone Number</label>
+                    {{ profile_form.phone_number|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if profile_form.phone_number.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ profile_form.phone_number.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-cyan-500 w-full hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto mt-8">
+            <h2 class="font-bold text-lg mb-4">Change Password</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="password_form" value="password_form">
+                <div class="mb-4">
+                    <label for="id_old_password" class="block text-gray-800 text-sm">Old Password</label>
+                    {{ password_form.old_password|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if password_form.old_password.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ password_form.old_password.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_new_password1" class="block text-gray-800 text-sm">New Password</label>
+                    {{ password_form.new_password1|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if password_form.new_password1.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ password_form.new_password1.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_new_password2" class="block text-gray-800 text-sm">Confirm New Password</label>
+                    {{ password_form.new_password2|add_class:"shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+                    {% if password_form.new_password2.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ password_form.new_password2.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-cyan-500 w-full hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Change Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
